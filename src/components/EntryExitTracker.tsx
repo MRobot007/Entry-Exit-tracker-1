@@ -421,29 +421,31 @@ const EntryExitTracker = () => {
           </CardHeader>
           <CardContent className="p-0 max-w-full overflow-hidden">
             <Tabs defaultValue="scanner" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-slate-100 p-1 m-6 rounded-xl">
+              <div className="px-6 mt-8">
+                <TabsList className="grid w-full grid-cols-3 bg-slate-200 p-1 mb-6 rounded-xl h-auto gap-2">
                 <TabsTrigger 
                   value="scanner" 
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md rounded-lg transition-all duration-200"
+                  className="flex items-center justify-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md rounded-lg transition-all duration-200 px-3 py-2 text-sm"
                 >
-                  <Camera className="w-4 h-4" />
-                  QR Scanner
+                  <Camera className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">QR Scanner</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="manual" 
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md rounded-lg transition-all duration-200"
+                  className="flex items-center justify-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md rounded-lg transition-all duration-200 px-3 py-2 text-sm"
                 >
-                  <UserCheck className="w-4 h-4" />
-                  Manual Entry
+                  <UserCheck className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">Manual Entry</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="people" 
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md rounded-lg transition-all duration-200"
+                  className="flex items-center justify-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-md rounded-lg transition-all duration-200 px-3 py-2 text-sm"
                 >
-                  <GraduationCap className="w-4 h-4" />
-                  Student Management
+                  <GraduationCap className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">Student Management</span>
                 </TabsTrigger>
               </TabsList>
+              </div>
 
               <TabsContent value="scanner" className="p-6 max-w-full overflow-hidden">
                 <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 max-w-full overflow-hidden shadow-lg">

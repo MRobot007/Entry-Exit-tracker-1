@@ -459,111 +459,107 @@ const PersonManager = ({ onPersonAdded }: PersonManagerProps) => {
       </div>
 
       {/* Search and Filter Section */}
-      <Card className="border-0 shadow-sm">
-        <CardContent className="p-6">
-          <div className="space-y-4">
-            {/* Search Bar */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-              <Input
-                placeholder="Search students by name, enrollment, or email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-11 text-sm"
-              />
-            </div>
+      <div className="space-y-4">
+        {/* Search Bar */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+          <Input
+            placeholder="Search students by name, enrollment, or email..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 h-11 text-sm"
+          />
+        </div>
 
-            {/* Filter Controls */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 border-slate-300 text-slate-600 hover:bg-slate-50 hover:border-slate-400 h-9"
+        {/* Filter Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowFilters(!showFilters)}
+            className="flex items-center gap-2 border-slate-300 text-slate-600 hover:bg-slate-50 hover:border-slate-400 h-9"
+          >
+            <Filter className="w-4 h-4" />
+            {showFilters ? 'Hide Filters' : 'Advanced Filters'}
+          </Button>
+          
+          {(searchTerm || selectedCourse || selectedBranch || selectedSemester) && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
+              className="flex items-center gap-2 text-slate-500 hover:text-slate-700 h-9"
+            >
+              <X className="w-4 h-4" />
+              Clear All Filters
+            </Button>
+          )}
+        </div>
+
+        {/* Filter Options */}
+        {showFilters && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-slate-200 rounded-lg bg-slate-50/50">
+            <div className="space-y-2">
+              <Label htmlFor="filterCourse" className="text-sm font-medium text-slate-700">Course</Label>
+              <select
+                id="filterCourse"
+                value={selectedCourse}
+                onChange={(e) => setSelectedCourse(e.target.value)}
+                className="w-full h-9 px-3 py-2 border border-slate-300 bg-white rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <Filter className="w-4 h-4" />
-                {showFilters ? 'Hide Filters' : 'Advanced Filters'}
-              </Button>
-              
-              {(searchTerm || selectedCourse || selectedBranch || selectedSemester) && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={clearFilters}
-                  className="flex items-center gap-2 text-slate-500 hover:text-slate-700 h-9"
-                >
-                  <X className="w-4 h-4" />
-                  Clear All Filters
-                </Button>
-              )}
+                <option value="">All Courses</option>
+                {uniqueCourses.map(course => (
+                  <option key={course} value={course}>{course}</option>
+                ))}
+              </select>
             </div>
-
-            {/* Filter Options */}
-            {showFilters && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border border-slate-200 rounded-lg bg-slate-50/50">
-                <div className="space-y-2">
-                  <Label htmlFor="filterCourse" className="text-sm font-medium text-slate-700">Course</Label>
-                  <select
-                    id="filterCourse"
-                    value={selectedCourse}
-                    onChange={(e) => setSelectedCourse(e.target.value)}
-                    className="w-full h-9 px-3 py-2 border border-slate-300 bg-white rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">All Courses</option>
-                    {uniqueCourses.map(course => (
-                      <option key={course} value={course}>{course}</option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="filterBranch" className="text-sm font-medium text-slate-700">Branch</Label>
-                  <select
-                    id="filterBranch"
-                    value={selectedBranch}
-                    onChange={(e) => setSelectedBranch(e.target.value)}
-                    className="w-full h-9 px-3 py-2 border border-slate-300 bg-white rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">All Branches</option>
-                    {uniqueBranches.map(branch => (
-                      <option key={branch} value={branch}>{branch}</option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="filterSemester" className="text-sm font-medium text-slate-700">Semester</Label>
-                  <select
-                    id="filterSemester"
-                    value={selectedSemester}
-                    onChange={(e) => setSelectedSemester(e.target.value)}
-                    className="w-full h-9 px-3 py-2 border border-slate-300 bg-white rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">All Semesters</option>
-                    {uniqueSemesters.map(semester => (
-                      <option key={semester} value={semester}>Semester {semester}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            )}
-
-            {/* Results Summary */}
-            <div className="flex items-center justify-between text-sm text-slate-600">
-              <span className="flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                Showing {filteredPeople.length} of {people.length} students
-              </span>
-              {(searchTerm || selectedCourse || selectedBranch || selectedSemester) && (
-                <Badge variant="secondary" className="flex items-center gap-1">
-                  <Filter className="w-3 h-3" />
-                  Filters Active
-                </Badge>
-              )}
+            
+            <div className="space-y-2">
+              <Label htmlFor="filterBranch" className="text-sm font-medium text-slate-700">Branch</Label>
+              <select
+                id="filterBranch"
+                value={selectedBranch}
+                onChange={(e) => setSelectedBranch(e.target.value)}
+                className="w-full h-9 px-3 py-2 border border-slate-300 bg-white rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">All Branches</option>
+                {uniqueBranches.map(branch => (
+                  <option key={branch} value={branch}>{branch}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="filterSemester" className="text-sm font-medium text-slate-700">Semester</Label>
+              <select
+                id="filterSemester"
+                value={selectedSemester}
+                onChange={(e) => setSelectedSemester(e.target.value)}
+                className="w-full h-9 px-3 py-2 border border-slate-300 bg-white rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">All Semesters</option>
+                {uniqueSemesters.map(semester => (
+                  <option key={semester} value={semester}>Semester {semester}</option>
+                ))}
+              </select>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        {/* Results Summary */}
+        <div className="flex items-center justify-between text-sm text-slate-600">
+          <span className="flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            Showing {filteredPeople.length} of {people.length} students
+          </span>
+          {(searchTerm || selectedCourse || selectedBranch || selectedSemester) && (
+            <Badge variant="secondary" className="flex items-center gap-1">
+              <Filter className="w-3 h-3" />
+              Filters Active
+            </Badge>
+          )}
+        </div>
+      </div>
 
       {/* Students Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
